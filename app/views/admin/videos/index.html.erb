@@ -1,0 +1,38 @@
+<div class="pull-right" style="margin-top: 20px; margin-bottom: 10px;">
+    <%= link_to("添加视频", new_admin_video_path, :class => "btn btn-default btn-info") %>
+</div>
+
+<table class="table table-boldered table-striped custab">
+    <thead>
+        <td>视频名称</td>
+        <td>操作选项</td>
+        <td>留言总数</td>
+        <td>发布者</td>
+        <td>发布日期</td>
+    </thead>
+    <% @videos.each do |v| %>
+    <tr>
+        <td>
+            <%= link_to(v.title, admin_video_path(v)) %></td>
+        <td>
+            <%= link_to admin_video_path(v) do %>
+            <% if v.image.present? %>
+            <%= image_tag(v.image.thumb.url, class: "thumbnail") %>
+        <% else %>
+            <%= image_tag("http://placehold.it/200x200&text=No Pic", class: "thumbnail") %>
+            <% end %>
+            <% end %>
+        </td>
+        <td>
+            <%= link_to edit_admin_video_path(v), class: 'btn btn-info btn-xs' do %>
+            <i class="fa fa-pencil"></i><% end %>
+            <%= link_to admin_video_path(v), :method => :delete, :data => {:confirm => "Are your sure?" }, class: 'btn btn-danger btn-xs' do %>
+            <i class="fa fa-trash-o"></i>
+            <% end %>
+        </td>
+        <td><%= link_to(v.video_comments.count, admin_video_video_comments_path(v)) %></td>
+        <td><%= v.user.email %></td>
+        <td><%= v.created_at %></td>
+    </tr>
+    <% end %>
+</table>
