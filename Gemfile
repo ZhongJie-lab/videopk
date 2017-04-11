@@ -36,6 +36,9 @@ gem 'devise'
 gem 'font-awesome-rails'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'therubyracer'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
