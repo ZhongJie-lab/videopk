@@ -1,83 +1,84 @@
 <!-- <div class="container"> -->
-    <div class="row">
-        <div class="col-md-6" style="width: 100%">
-            <div class=" panel" style="background-color: #efefef; margin-top: 20px;">
-                <% if @battle.present? %>
-                <h2 style="margin-left: 10px; margin-bottom: 20px;"><%= @battle.title %></h2>
-                <p class="pull-left" style="margin-left: 10px; height: 30px;"><%= simple_format(@battle.description) %></p>
-            <% else %>
-                <h2 style="margin-left: 10px;">PK赛尚未开始，敬请期待！</h2>
-                <% end %>
-            </div>
+<div class="row">
+    <div class="col-md-6" style="width: 100%">
+        <div class=" panel" style="background-color: #efefef; margin-top: 20px;">
+            <% if @battle.present? %>
+            <h1 align="center" , style="margin-left: 10px; margin-bottom: 20px;"><%= @battle.title %></h1>
+            <p class="pull-left" style="margin-left: 10px; height: 30px;"><%= simple_format(@battle.description) %></p>
+        <% else %>
+            <h2 style="margin-left: 10px;">PK赛尚未开始，敬请期待！</h2>
+            <% end %>
         </div>
     </div>
-    <% if @battle.present? %>
-    <table width="100%">
-        <tr>
-            <th>
-                    <div class="panel" style="margin-left:10px; margin-top: 20px;">
-                          <span class="pull-left">
-                            <% if @left_video.user.avatar_file_name.present? %>
-                              <%= image_tag(@left_video.user.avatar.url(:thumb), :size => "35x35", class: "img-circle") %>
-                            <% else %>
-                              <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
-                            <% end %>
-                            <%= @left_video.user.name %>
-                          </span>
-                    </div>
-              </th>
-              <th>
-                <div class="word_light" style="margin-top: 20px; text-align: center;">
-                  VS
-                </div>
-              </th>
-              <th>
-                  <div class="panel" style="margin-right: 10px; margin-top: 20px;">
-                  <span class="pull-right">
-                    <%= @right_video.user.name %>
-                      <% if @right_video.user.avatar_file_name.present? %>
-                        <%= image_tag(@right_video.user.avatar.url(:thumb), :size => "35x35", class: "img-circle") %>
-                      <% else %>
-                        <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
-                      <% end %>
-
-                  </span>
-                </div>
-              </th>
-                <!-- <th class="word_light">VS</th> -->
-          </tr>
-       </table>
-       <table width="100%">
-         <tr>
-           <td width="15%">
-             <div class="panel" style="margin-left:10px;">
-               <span class="pull-left">
-                            <% if current_user %>
-                              <% if current_user.has_follow_left?(@battle) %>
-                                <!-- <%#= link_to unfollow_left_video_battle_path(@battle), :method => :post do %>
+</div>
+<% if @battle.present? %>
+<table width="100%">
+    <tr>
+        <th>
+            <div class="panel" style="margin-left:10px; margin-top: 20px;">
+                <span class="pull-left">
+                    <!-- <% if @left_video.user.avatar_file_name.present? %>
+                    <%= image_tag(@left_video.user.avatar.url(:thumb), :size => "45x45", class: "img-circle") %>
+                <% else %>
+                    <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
+                    <% end %> -->
+                    <!-- <%= @left_video.user.name %> -->
+                    <%= @left_video.title %>
+                </span>
+            </div>
+        </th>
+        <th>
+            <div class="word_light" style="margin-top: 20px; text-align: center;">
+                VS
+            </div>
+        </th>
+        <th>
+            <div class="panel" style="margin-right: 10px; margin-top: 20px;">
+                <span class="pull-right">
+                    <!-- <%= @right_video.user.name %> -->
+                    <%= @right_video.title %>
+                    <!-- <% if @right_video.user.avatar_file_name.present? %>
+                    <%= image_tag(@right_video.user.avatar.url(:thumb), :size => "45x45", class: "img-circle") %>
+                <% else %>
+                    <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
+                    <% end %> -->
+                </span>
+            </div>
+        </th>
+        <!-- <th class="word_light">VS</th> -->
+    </tr>
+</table>
+<table width="100%">
+    <tr>
+        <td width="30%">
+            <div class="panel" style="margin-left:10px;">
+                <span class="pull-left">
+                    <% if current_user %>
+                    <% if current_user.has_follow_left?(@battle) %>
+                    <!-- <%#= link_to unfollow_left_video_battle_path(@battle), :method => :post do %>
                                   <i class="fa fa-thumbs-up fa-2x" aria-hidden="true" style="color:blue;"></i>
                                 <%# end %> -->
-                                <%= link_to("投票给TA", unfollow_left_video_battle_path(@battle), :method => :post,
+                    <%= link_to("投票给TA", unfollow_left_video_battle_path(@battle), :method => :post,
                                               :class => "btn btn-default vote_left") %>
-                              <% else %>
-                                <!-- <%#= link_to follow_left_video_battle_path(@battle), :method => :post do %>
+                <% else %>
+                    <!-- <%#= link_to follow_left_video_battle_path(@battle), :method => :post do %>
                                   <i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true" style="color:blue;"></i>
                                 <%# end %> -->
-                                <%= link_to("投票给TA", follow_left_video_battle_path(@battle), :method => :post,
+                    <%= link_to("投票给TA", follow_left_video_battle_path(@battle), :method => :post,
                                               :class => "btn btn-default vote_left") %>
-                              <% end %>
-                            <% else %>
-                              <!-- <%#= link_to new_user_session_path, :method => :post do %>
+                    <% end %>
+                <% else %>
+                    <!-- <%#= link_to new_user_session_path, :method => :post do %>
                                 <i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true" style="color:blue;"></i>
                               <%# end %> -->
-                              <%= link_to("投票给TA", new_user_session_path, :method => :post, :class => "btn btn-default vote_left") %>
-                            <% end %>
+                    <%= link_to("投票给TA", new_user_session_path, :method => :post, :class => "btn btn-default vote_left") %>
+                    <% end %>
 
-                          <%= @battle.left_followers.count %>
-                        </span>
-                  </div>
-           </td>
-           <td width="70%">
+                    <%= @battle.left_followers.count %>
+                </span>
+            </div>
+        </td>
+        <!-- <td width="40%">
              <div class="progress" style="margin-top: 20px;">
                <div id="leftBar" class="progress-bar" role="progressbar" style="width:<%= render_left_width(@battle)%>%;
                         background-color:blue; color:blue;">
@@ -88,116 +89,135 @@
                  Right
                </div>
             </div>
-           </td>
-           <td width="15%">
-             <div class="panel" style="margin-right:10px;">
-               <span class="pull-right">
-                 <%= @battle.right_followers.count %>
-                                <% if current_user %>
-                                  <% if current_user.has_follow_right?(@battle) %>
-                                    <!-- <%#= link_to unfollow_right_video_battle_path(@battle), :method => :post do %>
+           </td> -->
+        <td width="30%">
+            <div class="panel" style="margin-right:10px;">
+                <span class="pull-right">
+                    <%= @battle.right_followers.count %>
+                    <% if current_user %>
+                    <% if current_user.has_follow_right?(@battle) %>
+                    <!-- <%#= link_to unfollow_right_video_battle_path(@battle), :method => :post do %>
                                       <i class="fa fa-thumbs-up fa-2x flip" aria-hidden="true" style="color:red;"></i>
                                     <%# end %> -->
-                                    <%= link_to("投票给TA", unfollow_right_video_battle_path(@battle), :method => :post,
+                    <%= link_to("投票给TA", unfollow_right_video_battle_path(@battle), :method => :post,
                                                   :class => "btn btn-default vote_right") %>
-                                  <% else %>
-                                    <!-- <%#= link_to follow_right_video_battle_path(@battle), :method => :post do %>
+                <% else %>
+                    <!-- <%#= link_to follow_right_video_battle_path(@battle), :method => :post do %>
                                     <i class="fa fa-thumbs-o-up fa-2x flip" aria-hidden="true" style="color:red;"></i>
                                     <%# end %> -->
-                                    <%= link_to("投票给TA", follow_right_video_battle_path(@battle), :method => :post,
+                    <%= link_to("投票给TA", follow_right_video_battle_path(@battle), :method => :post,
                                                   :class => "btn btn-default vote_right") %>
-                                  <% end %>
-                                <% else %>
-                                  <!-- <%#= link_to new_user_session_path, :method => :post do %>
+                    <% end %>
+                <% else %>
+                    <!-- <%#= link_to new_user_session_path, :method => :post do %>
                                     <i class="fa fa-thumbs-o-up fa-2x flip" aria-hidden="true" style="color:red;"></i>
                                   <%# end %> -->
-                                  <%= link_to("投票给TA", new_user_session_path, :method => :post, :class => "btn btn-default vote_right") %>
-                                <% end %>
-                              </span>
-                </div>
-           </td>
-         </tr>
-       </table>
-            <table>
-                  <tr>
-                    <th>
-                        <div class="col-md-3" >
-                          <%= video_tag([@left_video.video_url.to_s], :size => "450x450", :controls =>true) %>
-                        </div>
-                    </th>
-                    <!-- <th class="word"></th> -->
-                    <th>
-                        <div class="col-md-3" >
-                          <%= video_tag([@right_video.video_url.to_s], :size => "450x450", :controls =>true) %>
-                        </div>
-                    </th>
-                  </tr>
-                </table>
-                    <br><br>
-                    <div class="row">
-                        <div class="col-md-6" style="width: 100%">
-                            <div class="panel with-nav-tabs panel-default">
-                                <div class="panel-heading">
-                                    <ul class="nav nav-tabs">
-                                        <li class="active">
-                                            <a href="#viewcomments" data-toggle="tab">精选评论</a>
-                                        </li>
-                                        <li>
-                                            <a href="#wirtecomments" data-toggle="tab">
-                                                <i class="fa fa-comments-o" aria-hidden="true"></i>
-                                                写评论</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="viewcomments">
-                                      <% @battle_comments.each do |comment| %>
-                                      <div class="row">
-                                        <div class="col-sm-1">
-                                          <div class="thumbnail" style="border: 0px;">
-                                            <% if comment.user.avatar_file_name.present? %>
-                                              <%= image_tag(comment.user.avatar.url(:thumb), :size => "30x30", class: "img-circle") %>
-                                            <% else %>
-                                              <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
-                                            <% end %>
-                                          </div><!-- /thumbnail -->
-                                        </div><!-- /col-sm-1 -->
+                    <%= link_to("投票给TA", new_user_session_path, :method => :post, :class => "btn btn-default vote_right") %>
+                    <% end %>
+                </span>
+            </div>
+        </td>
+    </tr>
+</table>
+<table width="100%">
+    <div class="progress" style="margin-top: 20px;">
+        <div id="leftBar" class="progress-bar" role="progressbar" style="width:<%= render_left_width(@battle)%>%;
+                        background-color:blue; color:blue;">
+            Left
+        </div>
+        <div id="rightBar" class="progress-bar" role="progressbar" style="width:<%= render_right_width(@battle)%>%;
+                        background-color:red; color:red" ;>
+            Right
+        </div>
+    </div>
+</tr>
+</table>
 
-                                        <div class="col-sm-10">
-                                          <div class="panel panel-default">
-                                            <div class="panel-heading" style="color: #bcbaba">
-                                              <strong>
-                                                <% if comment.user.name.present? %>
-                                                  <%= comment.user.name %>
-                                                <% else %>
-                                                  <%= comment.user.email %>
-                                                <% end %>
-                                              </strong>
-                                            </div>
-                                            <div class="panel-body">
-                                              <%= simple_format(comment.comment) %>
-                                            </div><!-- /panel-body -->
-                                          </div><!-- /panel panel-default -->
-                                        </div><!-- /col-sm-5 -->
-                                      </div>
-                                      <% end %>
+<table>
+<tr>
+    <th>
+        <div class="col-md-3">
+            <%= video_tag([@left_video.video_url.to_s], :size => "450x450", :controls =>true) %>
+        </div>
+    </th>
+    <!-- <th class="word"></th> -->
+    <th>
+        <div class="col-md-3">
+            <%= video_tag([@right_video.video_url.to_s], :size => "450x450", :controls =>true) %>
+        </div>
+    </th>
+</tr>
+</table>
+<br><br>
+<div class="row">
+<div class="col-md-6" style="width: 100%">
+    <div class="panel with-nav-tabs panel-default">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#viewcomments" data-toggle="tab">精选评论</a>
+                </li>
+                <li>
+                    <a href="#wirtecomments" data-toggle="tab">
+                        <i class="fa fa-comments-o" aria-hidden="true"></i>
+                        写评论</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="viewcomments">
+                <% @battle_comments.each do |comment| %>
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="thumbnail" style="border: 0px;">
+                            <% if comment.user.avatar_file_name.present? %>
+                            <%= image_tag(comment.user.avatar.url(:thumb), :size => "30x30", class: "img-circle") %>
+                        <% else %>
+                            <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
+                            <% end %>
+                        </div>
+                        <!-- /thumbnail -->
+                    </div>
+                    <!-- /col-sm-1 -->
 
-                                    </div>
-                                    <div class="tab-pane" id="wirtecomments">
-                                        <div>
-                                            <%= simple_form_for([@battle, @battle_comment]) do |f| %>
-                                            <div class="form-inputs">
-                                                <%= f.input :comment, label: false, class: "form-control" %>
-                                            </div>
-                                            <div class="form-actions">
-                                                <%= f.button :submit, value = "提交", class: "btn btn-primary" %>
-                                            </div>
-                                            <% end %>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="col-sm-10">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="color: #bcbaba">
+                                <strong>
+                                    <% if comment.user.name.present? %>
+                                    <%= comment.user.name %>
+                                <% else %>
+                                    <%= comment.user.email %>
+                                    <% end %>
+                                </strong>
                             </div>
+                            <div class="panel-body">
+                                <%= simple_format(comment.comment) %>
+                            </div>
+                            <!-- /panel-body -->
                         </div>
+                        <!-- /panel panel-default -->
+                    </div>
+                    <!-- /col-sm-5 -->
+                </div>
+                <% end %>
+
+            </div>
+            <div class="tab-pane" id="wirtecomments">
+                <div>
+                    <%= simple_form_for([@battle, @battle_comment]) do |f| %>
+                    <div class="form-inputs">
+                        <%= f.input :comment, label: false, class: "form-control" %>
+                    </div>
+                    <div class="form-actions">
+                        <%= f.button :submit, value = "提交", class: "btn btn-primary" %>
                     </div>
                     <% end %>
-                <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<% end %>
+<!-- </div> -->

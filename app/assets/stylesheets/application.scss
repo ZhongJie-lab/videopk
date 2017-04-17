@@ -75,6 +75,7 @@
 }
 .panel {
 	position:relative;
+  font-size: 24px;
 }
 .panel>.panel-heading:after,.panel>.panel-heading:before{
 	position:absolute;
@@ -107,6 +108,9 @@
   color: #fff;
   -webkit-transition: background .3s ease;
           transition: background .3s ease;
+  width:100px;
+  height:40px;
+  font-size: 18px;
 }
 
 .vote_left:hover {
@@ -121,6 +125,9 @@
       color: #fff;
       -webkit-transition: background .3s ease;
               transition: background .3s ease;
+    width:100px;
+    height:40px;
+    font-size: 18px;
     }
 
 .vote_right:hover {
