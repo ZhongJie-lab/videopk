@@ -16,29 +16,19 @@
   <h1><%= @left_video.title %> VS <%=@right_video.title></h1>
   <div class="row">
     <div class="col-sm-6 col-xs-6">
-                    <% if current_user %>
+                <% if current_user %>
                     <% if current_user.has_follow_left?(@battle) %>
-                    <!-- <%#= link_to unfollow_left_video_battle_path(@battle), :method => :post do %>
-                                  <i class="fa fa-thumbs-up fa-2x" aria-hidden="true" style="color:blue;"></i>
-                                <%# end %> -->
-                    <%= link_to("投票给TA", unfollow_left_video_battle_path(@battle), :method => :post,
+                        <%= link_to("投票给TA", unfollow_left_video_battle_path(@battle), :method => :post,
                                               :class => "btn btn-default vote_left") %>
-                <% else %>
-                    <!-- <%#= link_to follow_left_video_battle_path(@battle), :method => :post do %>
-                                  <i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true" style="color:blue;"></i>
-                                <%# end %> -->
-                    <%= link_to("投票给TA", follow_left_video_battle_path(@battle), :method => :post,
+                    <% else %>
+                        <%= link_to("投票给TA", follow_left_video_battle_path(@battle), :method => :post,
                                               :class => "btn btn-default vote_left") %>
                     <% end %>
                 <% else %>
-                    <!-- <%#= link_to new_user_session_path, :method => :post do %>
-                                <i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true" style="color:blue;"></i>
-                              <%# end %> -->
                     <%= link_to("投票给TA", new_user_session_path, :method => :post, :class => "btn btn-default vote_left") %>
-                    <% end %>
+                <% end %>
 
-                    <%= @battle.left_followers.count %>
-
+                <%= @battle.left_followers.count %>
     </div>
     <div class="col-sm-6 col-xs-6" style="text-align:right">
                     <%= @battle.right_followers.count %>
@@ -169,4 +159,3 @@
 </div>
 </div>
 <% end %>
-<!-- </div> -->
