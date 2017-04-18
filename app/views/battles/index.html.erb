@@ -150,7 +150,7 @@
     <!-- <th class="word"></th> -->
     <th>
         <div class="col-md-3">
-            <%= video_tag([@right_video.video_url.to_s], :size => "450x450", :controls =>true) %>
+            <%= video_tag([@right_video.video_url.to_s], :size => "450x450", :controls =>true, :poster => @right_video.image.to_s)) %>
         </div>
     </th>
 </tr>
