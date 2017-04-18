@@ -12,47 +12,21 @@
     </div>
 </div>
 <% if @battle.present? %>
-<table width="100%">
-    <tr>
-        <th>
-            <div class="panel" style="margin-left:10px; margin-top: 20px;">
-                <span class="pull-left">
-                    <!-- <% if @left_video.user.avatar_file_name.present? %>
-                    <%= image_tag(@left_video.user.avatar.url(:thumb), :size => "45x45", class: "img-circle") %>
-                <% else %>
-                    <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
-                    <% end %> -->
-                    <!-- <%= @left_video.user.name %> -->
-                    <%= @left_video.title %>
-                </span>
-            </div>
-        </th>
-        <th>
-            <div class="word_light" style="margin-top: 20px; text-align: center;">
-                VS
-            </div>
-        </th>
-        <th>
-            <div class="panel" style="margin-right: 10px; margin-top: 20px;">
-                <span class="pull-right">
-                    <!-- <%= @right_video.user.name %> -->
-                    <%= @right_video.title %>
-                    <!-- <% if @right_video.user.avatar_file_name.present? %>
-                    <%= image_tag(@right_video.user.avatar.url(:thumb), :size => "45x45", class: "img-circle") %>
-                <% else %>
-                    <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
-                    <% end %> -->
-                </span>
-            </div>
-        </th>
-        <!-- <th class="word_light">VS</th> -->
-    </tr>
-</table>
-<table width="100%">
-    <tr>
-        <td width="30%">
-            <div class="panel" style="margin-left:10px;">
-                <span class="pull-left">
+<div class="container">
+  <h1>Hello World!</h1>
+  <div class="row">
+    <div class="col-sm-6 col-xs-6">
+      <%= @left_video.title %>
+    </div>
+    <div class="col-sm-6 col-xs-6" style="text-align:center">
+      VS
+    </div>
+    <div class="col-sm-6 col-xs-6" style="text-align:right">
+      <%= @right_video.title %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-xs-6">
                     <% if current_user %>
                     <% if current_user.has_follow_left?(@battle) %>
                     <!-- <%#= link_to unfollow_left_video_battle_path(@battle), :method => :post do %>
@@ -75,24 +49,9 @@
                     <% end %>
 
                     <%= @battle.left_followers.count %>
-                </span>
-            </div>
-        </td>
-        <!-- <td width="40%">
-             <div class="progress" style="margin-top: 20px;">
-               <div id="leftBar" class="progress-bar" role="progressbar" style="width:<%= render_left_width(@battle)%>%;
-                        background-color:blue; color:blue;">
-                 Left
-               </div>
-               <div id="rightBar" class="progress-bar" role="progressbar" style="width:<%= render_right_width(@battle)%>%;
-                        background-color:red; color:red";>
-                 Right
-               </div>
-            </div>
-           </td> -->
-        <td width="30%">
-            <div class="panel" style="margin-right:10px;">
-                <span class="pull-right">
+
+    </div>
+    <div class="col-sm-6 col-xs-6" style="text-align:right">
                     <%= @battle.right_followers.count %>
                     <% if current_user %>
                     <% if current_user.has_follow_right?(@battle) %>
@@ -114,12 +73,10 @@
                                   <%# end %> -->
                     <%= link_to("投票给TA", new_user_session_path, :method => :post, :class => "btn btn-default vote_right") %>
                     <% end %>
-                </span>
-            </div>
-        </td>
-    </tr>
-</table>
-<table width="100%">
+
+    </div>
+  </div>
+  <div class="row">
   <% if @battle.left_followers.count > 0 || @battle.right_followers.count > 0 %>
     <div class="progress" style="margin-top: 20px;">
         <div id="leftBar" class="progress-bar" role="progressbar" style="width:<%= render_left_width(@battle)%>%;
@@ -137,24 +94,20 @@
             </div>
           </div>
   <% end %>
-</tr>
-</table>
 
-<table>
-<tr>
-    <th>
-        <div class="col-md-3">
-            <%= video_tag([@left_video.video_url.to_s], :size => "450x450", :controls =>true, :poster => @left_video.image.to_s) %>
-        </div>
-    </th>
-    <!-- <th class="word"></th> -->
-    <th>
-        <div class="col-md-3">
-            <%= video_tag([@right_video.video_url.to_s], :size => "450x450", :controls =>true, :poster => @right_video.image.to_s) %>
-        </div>
-    </th>
-</tr>
-</table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-xs-6">
+        <%= video_tag([@left_video.video_url.to_s], :size => "450x450", :controls =>true, :poster => @left_video.image.to_s) %>
+    </div>
+    <div class="col-sm-6 col-xs-6">
+        <%= video_tag([@right_video.video_url.to_s], :size => "450x450", :controls =>true, :poster => @right_video.image.to_s) %>
+    </div>
+  </div>
+</div>
+
+
+
 <br><br>
 <div class="row">
 <div class="col-md-6" style="width: 100%">
