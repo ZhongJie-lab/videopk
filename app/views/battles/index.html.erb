@@ -1,6 +1,6 @@
 <!-- <div class="container"> -->
 <div class="row">
-    <div class="col-md-6" style="width: 100%">
+    <div class="col-md-6 col-xs-6" style="width: 100%">
         <div class=" panel" style="background-color: #efefef; margin-top: 20px;">
             <% if @battle.present? %>
                 <h1 align="center" , style="margin-left: 10px; margin-bottom: 20px;"><%= @battle.title %></h1>
@@ -75,10 +75,10 @@
 
   </div>
   <div class="row">
-    <div class="col-sm-6 col-xs-6" id="videoplayer">
+    <div class="col-sm-6 col-xs-6" id="videoplayer" style="width: 100%">
         <%= video_tag([@left_video.video_url.to_s], :controls =>true, :poster => @left_video.image.to_s) %>
     </div>
-    <div class="col-sm-6 col-xs-6" id="videoplayer">
+    <div class="col-sm-6 col-xs-6" id="videoplayer" style="width: 100%">
         <%= video_tag([@right_video.video_url.to_s], :controls =>true, :poster => @right_video.image.to_s) %>
     </div>
   </div>
