@@ -75,10 +75,10 @@
 
   </div>
   <div class="row"  style="margin-left: 0px">
-    <div class="col-sm-6 col-xs-5" id="videoplayer">
+    <div class="col-sm-6 col-xs-5 embed-responsive" id="videoplayer">
         <%= video_tag([@left_video.video_url.to_s], :controls =>true, :poster => @left_video.image.to_s) %>
     </div>
-    <div class="col-sm-6 col-xs-5" id="videoplayer">
+    <div class="col-sm-6 col-xs-5 embed-responsive" id="videoplayer">
         <%= video_tag([@right_video.video_url.to_s], :controls =>true, :poster => @right_video.image.to_s) %>
     </div>
   </div>
