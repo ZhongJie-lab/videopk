@@ -1,98 +1,35 @@
 <!-- <div class="container"> -->
 <div class="row">
-    <div class="col-md-6" style="width: 100%">
+    <div class="col-md-6 col-xs-6" style="width: 100%">
         <div class=" panel" style="background-color: #efefef; margin-top: 20px;">
             <% if @battle.present? %>
-            <h1 align="center" , style="margin-left: 10px; margin-bottom: 20px;"><%= @battle.title %></h1>
-            <!-- <p class="pull-left" style="margin-left: 10px; height: 30px;"><%#= simple_format(@battle.description) %></p> -->
-        <% else %>
-            <h2 style="margin-left: 10px;">PK赛尚未开始，敬请期待！</h2>
+                <h1 align="center" , style="margin-left: 10px; margin-bottom: 20px;"><%= @battle.title %></h1>
+                <!-- <p class="pull-left" style="margin-left: 10px; height: 30px;"><%#= simple_format(@battle.description) %></p> -->
+            <% else %>
+                <h2 style="margin-left: 10px;">PK赛尚未开始，敬请期待！</h2>
             <% end %>
         </div>
     </div>
 </div>
 <% if @battle.present? %>
-<table width="100%">
-    <tr>
-        <th>
-            <div class="panel" style="margin-left:10px; margin-top: 20px;">
-                <span class="pull-left">
-                    <!-- <% if @left_video.user.avatar_file_name.present? %>
-                    <%= image_tag(@left_video.user.avatar.url(:thumb), :size => "45x45", class: "img-circle") %>
-                <% else %>
-                    <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
-                    <% end %> -->
-                    <!-- <%= @left_video.user.name %> -->
-                    <%= @left_video.title %>
-                </span>
-            </div>
-        </th>
-        <th>
-            <div class="word_light" style="margin-top: 20px; text-align: center;">
-                VS
-            </div>
-        </th>
-        <th>
-            <div class="panel" style="margin-right: 10px; margin-top: 20px;">
-                <span class="pull-right">
-                    <!-- <%= @right_video.user.name %> -->
-                    <%= @right_video.title %>
-                    <!-- <% if @right_video.user.avatar_file_name.present? %>
-                    <%= image_tag(@right_video.user.avatar.url(:thumb), :size => "45x45", class: "img-circle") %>
-                <% else %>
-                    <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
-                    <% end %> -->
-                </span>
-            </div>
-        </th>
-        <!-- <th class="word_light">VS</th> -->
-    </tr>
-</table>
-<table width="100%">
-    <tr>
-        <td width="30%">
-            <div class="panel" style="margin-left:10px;">
-                <span class="pull-left">
-                    <% if current_user %>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-xs-6">
+                <% if current_user %>
                     <% if current_user.has_follow_left?(@battle) %>
-                    <!-- <%#= link_to unfollow_left_video_battle_path(@battle), :method => :post do %>
-                                  <i class="fa fa-thumbs-up fa-2x" aria-hidden="true" style="color:blue;"></i>
-                                <%# end %> -->
-                    <%= link_to("投票给TA", unfollow_left_video_battle_path(@battle), :method => :post,
+                        <%= link_to("投票给TA", unfollow_left_video_battle_path(@battle), :method => :post,
                                               :class => "btn btn-default vote_left") %>
-                <% else %>
-                    <!-- <%#= link_to follow_left_video_battle_path(@battle), :method => :post do %>
-                                  <i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true" style="color:blue;"></i>
-                                <%# end %> -->
-                    <%= link_to("投票给TA", follow_left_video_battle_path(@battle), :method => :post,
+                    <% else %>
+                        <%= link_to("投票给TA", follow_left_video_battle_path(@battle), :method => :post,
                                               :class => "btn btn-default vote_left") %>
                     <% end %>
                 <% else %>
-                    <!-- <%#= link_to new_user_session_path, :method => :post do %>
-                                <i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true" style="color:blue;"></i>
-                              <%# end %> -->
                     <%= link_to("投票给TA", new_user_session_path, :method => :post, :class => "btn btn-default vote_left") %>
-                    <% end %>
+                <% end %>
 
-                    <%= @battle.left_followers.count %>
-                </span>
-            </div>
-        </td>
-        <!-- <td width="40%">
-             <div class="progress" style="margin-top: 20px;">
-               <div id="leftBar" class="progress-bar" role="progressbar" style="width:<%= render_left_width(@battle)%>%;
-                        background-color:blue; color:blue;">
-                 Left
-               </div>
-               <div id="rightBar" class="progress-bar" role="progressbar" style="width:<%= render_right_width(@battle)%>%;
-                        background-color:red; color:red";>
-                 Right
-               </div>
-            </div>
-           </td> -->
-        <td width="30%">
-            <div class="panel" style="margin-right:10px;">
-                <span class="pull-right">
+                <%= @battle.left_followers.count %>
+    </div>
+    <div class="col-sm-6 col-xs-6" style="text-align:right">
                     <%= @battle.right_followers.count %>
                     <% if current_user %>
                     <% if current_user.has_follow_right?(@battle) %>
@@ -114,12 +51,10 @@
                                   <%# end %> -->
                     <%= link_to("投票给TA", new_user_session_path, :method => :post, :class => "btn btn-default vote_right") %>
                     <% end %>
-                </span>
-            </div>
-        </td>
-    </tr>
-</table>
-<table width="100%">
+
+    </div>
+  </div>
+  <div class="row">
   <% if @battle.left_followers.count > 0 || @battle.right_followers.count > 0 %>
     <div class="progress" style="margin-top: 20px;">
         <div id="leftBar" class="progress-bar" role="progressbar" style="width:<%= render_left_width(@battle)%>%;
@@ -137,24 +72,26 @@
             </div>
           </div>
   <% end %>
-</tr>
-</table>
 
-<table>
-<tr>
-    <th>
-        <div class="col-md-3">
-            <%= video_tag([@left_video.video_url.to_s], :size => "450x450", :controls =>true) %>
-        </div>
-    </th>
-    <!-- <th class="word"></th> -->
-    <th>
-        <div class="col-md-3">
-            <%= video_tag([@right_video.video_url.to_s], :size => "450x450", :controls =>true) %>
-        </div>
-    </th>
-</tr>
-</table>
+  </div>
+  <div class="row "  style="margin-left: 0px">
+
+
+    <div class="col-sm-6 col-xs-6">
+      <video src= <%= @left_video.video_url.to_s %> style = "width:100%" poster=<%= @left_video.image.to_s %>  controls>
+      <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.webm">link to the video</a> instead.</p> 
+      </video>
+    </div>
+    <div class="col-sm-6 col-xs-6">
+      <video src=<%= @right_video.video_url.to_s %> style = "width:100%"  poster=<%= @right_video.image.to_s %> controls>
+        <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.webm">link to the video</a> instead.</p> 
+      </video>
+    </div>
+  </div>
+</div>
+
+
+
 <br><br>
 <div class="row">
 <div class="col-md-6" style="width: 100%">
@@ -227,4 +164,3 @@
 </div>
 </div>
 <% end %>
-<!-- </div> -->
