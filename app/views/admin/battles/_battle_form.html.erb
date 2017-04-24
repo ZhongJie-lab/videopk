@@ -7,11 +7,12 @@
         <%= f.input :description, :label => "PK赛介绍" %>
     </div>
     <div class="group">
-      <%= select_tag(:left_video_id, options_for_select(@videos), :prompt => "视频一") %>
+      <%= f.input :left_video_id, :label => "左边视频", :collection => Video.all.map{ |x| [x.title, x.id] },  :prompt => ""  %>
     </div>
     <div class="group">
-      <%= select_tag(:right_video_id, options_for_select(@videos), :prompt => "视频二") %>
+      <%= f.input :right_video_id, :label => "右边视频", :collection => Video.all.map{ |x| [x.title, x.id] },  :prompt => "" %>
     </div>
+    <br>
     <%= f.submit "提交" , disable_with: "Submiting...", class: "btn btn-primary" %>
     <%= link_to "取消", admin_battles_path, class: "btn btn-primary"%>
 </div>

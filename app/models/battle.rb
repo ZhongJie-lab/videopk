@@ -1,7 +1,7 @@
 class Battle < ApplicationRecord
   validates :title, presence: true
-  #validates :left_video_id, presence: true
-  #validates :right_video_id, presence: true
+  validates :left_video_id, presence: true
+  validates :right_video_id, presence: true
 
   scope :recent, -> { order('created_at desc') }
 

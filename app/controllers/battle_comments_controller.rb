@@ -1,6 +1,7 @@
 class BattleCommentsController < ApplicationController
   before_action :authenticate_user!
   def new
+    @battle = Battle.find(params[:battle_id])
     @battle_comment = BattleComment.new
   end
 
@@ -12,7 +13,7 @@ class BattleCommentsController < ApplicationController
     @battle_comment.battle = battle
     @battle_comment.save!
 
-    redirect_to :back
+    redirect_to root_path
   end
 
   private

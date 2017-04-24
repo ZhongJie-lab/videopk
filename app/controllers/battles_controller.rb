@@ -22,7 +22,7 @@ class BattlesController < ApplicationController
 
   def follow_left_video
     if current_user.has_follow_right?(@battle)
-      flash[:warning] = "您以及给右边视频投票！不能同时投两边！"
+      flash[:warning] = "已经给右边视频投票！不能同时投两边！"
     else
       current_user.follow_left!(@battle)
     end
@@ -36,7 +36,7 @@ class BattlesController < ApplicationController
 
   def follow_right_video
     if current_user.has_follow_left?(@battle)
-      flash[:warning] = "您以及给左边视频投票！不能同时投两边！"
+      flash[:warning] = "已经给左边视频投票！不能同时投两边！"
     else
       current_user.follow_right!(@battle)
     end

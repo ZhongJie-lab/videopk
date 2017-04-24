@@ -24,8 +24,6 @@ class Admin::BattlesController < ApplicationController
 
   def create
     @battle = Battle.create(battle_params)
-    @battle.left_video_id = params[:left_video_id]
-    @battle.right_video_id = params[:right_video_id]
 
     if @battle.save
       redirect_to admin_battles_path, notice: 'Battle Created!'
@@ -41,8 +39,6 @@ class Admin::BattlesController < ApplicationController
 
   def update
     @battle = Battle.find(params[:id])
-    @battle.left_video_id = params[:left_video_id]
-    @battle.right_video_id = params[:right_video_id]
 
     if @battle.update(battle_params)
       redirect_to admin_battles_path, notice: 'Battle updated!'

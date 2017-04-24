@@ -4,7 +4,7 @@
     <div class="col-xs-12" style="width: 100%">
         <div class=" panel1">
             <% if @battle.present? %>
-                <h2 align="center"><%= @battle.title %></h1>
+                <h2 align="center"><%= @battle.title %></h2>
                 <!-- <p class="pull-left" style="margin-left: 10px; height: 30px;"><%#= simple_format(@battle.description) %></p> -->
             <% else %>
                 <h2 style="margin-left: 10px; color: #999;">PK赛尚未开始，敬请期待！</h2>
@@ -96,71 +96,50 @@
 
 
 <br><br>
-<div class="row">
-<div class="col-md-6" style="width: 100%">
-    <div class="panel with-nav-tabs panel-default">
-        <div class="panel-heading">
-            <ul class="nav nav-tabs">
-                <li class="active">
-                    <a href="#viewcomments" data-toggle="tab">精选评论</a>
-                </li>
-                <li>
-                    <a href="#wirtecomments" data-toggle="tab">
-                        <i class="fa fa-comments-o" aria-hidden="true"></i>
-                        写评论</a>
-                </li>
-            </ul>
-        </div>
-        <div class="tab-content" style="margin-top:20px; padding: 0 10px;">
-            <div class="tab-pane active" id="viewcomments">
-                <% @battle_comments.each do |comment| %>
-                <div class="row">
-                    <div class="col-xs-2">
-                        <div class="thumbnail" style="border: 0px;">
-                            <% if comment.user.avatar_file_name.present? %>
-                            <%= image_tag(comment.user.avatar.url(:thumb), :size => "30x30", class: "img-circle") %>
-                        <% else %>
-                            <%= image_tag("http://placehold.it/100x100&text=No Pic", class: "img-circle") %>
-                            <% end %>
-                        </div>
-                        <!-- /thumbnail -->
-                    </div>
-                    <!-- /col-sm-1 -->
-
-                    <div class="col-xs-10">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" style="color: #bcbaba">
-                                <strong>
-                                    <%= comment.user.display_name %>
-                                </strong>
-                            </div>
-                            <div class="panel-body">
-                                <%= simple_format(comment.comment) %>
-                            </div>
-                            <!-- /panel-body -->
-                        </div>
-                        <!-- /panel panel-default -->
-                    </div>
-                    <!-- /col-sm-5 -->
-                </div>
-                <% end %>
-
-            </div>
-            <div class="tab-pane" id="wirtecomments">
-                <div>
-                    <%= simple_form_for([@battle, @battle_comment]) do |f| %>
-                    <div class="form-inputs">
-                        <%= f.input :comment, label: false, class: "form-control" %>
-                    </div>
-                    <div class="form-actions">
-                        <%= f.button :submit, value = "提交", class: "btn btn-success" %>
-                    </div>
-                    <% end %>
-                </div>
-            </div>
-        </div>
+<div class="row comments">
+  <div class="col-xs-12 ">
+    <div class="comments-title">
+      精选留言
+      <span class="pull-right">
+        <%= link_to new_battle_battle_comment_path(@battle) do %>
+          写评论 <i class="fa fa-pencil" aria-hidden="true"></i>
+        <% end %>
+      </span>
     </div>
-</div>
+    <br><br>
+    <% if @battle_comments.blank? %>
+      还没有人评论 ~
+    <% else %>
+    <% @battle_comments.each do |comment| %>
+    <div class="row comment-list">
+      <div class="col-xs-2">
+        <div class="thumbnail1" style="margin-top:5px;">
+            <% if comment.user.avatar_file_name.present? %>
+            <%= image_tag(comment.user.avatar.url(:thumb), :size => "30x30", class: "img-circle") %>
+        <% else %>
+            <%= image_tag("http://placehold.it/100x100&text=No Pic", :size => "30x30", class: "img-circle") %>
+            <% end %>
+        </div>
+      </div>
+      <div class="col-xs-10">
+        <p>
+          <% if comment.user.name.present? %>
+            <%= comment.user.name %>
+          <% else %>
+            <%= comment.user.display_name %>
+          <% end %>
+        </p>
+        <p>
+          <%= simple_format(comment.comment) %>
+        </p>
+        <p>
+          <%= comment.created_at.strftime("%Y年%-m月%d日") %>
+        </p>
+      </div>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
 </div>
 
 <% end %>
