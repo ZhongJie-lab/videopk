@@ -3,6 +3,7 @@ class Api::V1::BattlesController < ApplicationController
   before_action :find_battle, only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video]
 
   def index
+    respond_to :json
     @battle = Battle.recent.first
 
     if @battle.present?
