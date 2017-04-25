@@ -6,7 +6,7 @@
     <div class="group">
         <%= f.input :description, :label => "视频介绍" %>
     </div>
-    <% if @video.image.url %>
+    <% if @video.image.present? %>
     <span>目前视频封面</span>
     <br>
     <%= image_tag(@video.image.thumb.url) %>

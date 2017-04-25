@@ -13,9 +13,10 @@
     <%= render "common/navbar" %>
 
     <div class="row">
-      <div class="col-xs-6 lists">
+      <div class="col-xs-8 lists">
         <span> <%= link_to("视频列表", admin_videos_path) %> </span> |
-        <span> <%= link_to("PK列表", admin_battles_path) %> </span>
+        <span> <%= link_to("PK列表", admin_battles_path) %> </span>  |
+        <span> <%= link_to("所有用户", admin_users_path) %> </span>
       </div>
       <div class="col-xs-12">
         <%= yield %>

@@ -9,10 +9,11 @@ class VideoUploader < CarrierWave::Uploader::Base
   # storage :fog
 
   if Rails.env.production?
+      #storage :fog
       storage :upyun
-  elsif Rails.env.development?
+    elsif Rails.env.development?
       storage :file
-  end
+    end
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir

@@ -81,12 +81,12 @@
 
 
     <div class="col-sm-6 col-xs-6">
-      <video src= <%= @left_video.video_url.to_s %> style = "width:100%" poster=<%= @left_video.image.url %>  controls>
+      <video src= <%= @left_video.video_url.to_s %> style = "width:100%" poster=<%= @left_video.image.thumb.to_s %>  controls>
       <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.webm">link to the video</a> instead.</p>
       </video>
     </div>
     <div class="col-sm-6 col-xs-6">
-      <video src=<%= @right_video.video_url.to_s %> style = "width:100%"  poster=<%= @right_video.image.url %> controls>
+      <video src=<%= @right_video.video_url.to_s %> style = "width:100%"  poster=<%= @right_video.image.thumb.to_s %> controls>
         <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.webm">link to the video</a> instead.</p>
       </video>
     </div>

@@ -1,8 +1,8 @@
 <h2><%= @video.title %></h2>
 视频介绍：<%= simple_format(@video.description) %>
 <div class="text-center">
-  <% if @video.image.url %>
-    <%= image_tag(@video.image.url, class: "thumbnail", width: 350) %>
+  <% if @video.image.present? %>
+    <%= image_tag(@video.image.medium.url, class: "thumbnail", width: 350) %>
   <% else %>
     <%= image_tag("http://placehold.it/400x400&text=No Pic", class: "thumbnail") %>
   <% end %>

@@ -1,0 +1,22 @@
+<div class="col-xs-12">
+  <p class=" text-center users-list">用户列表</p>
+
+  <% @users.each do |user| %>
+    <hr>
+    <p>
+      用户名：
+      <% if user.name.present? %>
+        <%= user.name %>
+      <% else %>
+        <%= user.display_name %>
+      <% end %>
+    </p>
+    <p>
+      邮箱： <%= user.email %>
+    </p>
+    <p>
+      注册于：<%= user.created_at.strftime("%Y年%-m月%d日") %>
+    </p>
+  <% end %>
+  <br>
+</div>

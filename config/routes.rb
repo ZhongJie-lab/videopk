@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     resources :battles do
       resources :battle_comments
     end
+
+    resources :users
   end
 
 end
