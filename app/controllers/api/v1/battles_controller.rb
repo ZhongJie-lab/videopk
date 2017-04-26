@@ -1,8 +1,11 @@
-class BattlesController < ApplicationController
-  before_action :authenticate_user!, only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video]
+class Api::V1::BattlesController < ApplicationController
+  #before_action :authenticate_user!, only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video]
   before_action :find_battle, only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video]
+  acts_as_token_authentication_handler_for User , only: [:index, :show, :follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video]
+
 
   def index
+    respond_to :json
     @battle = Battle.recent.first
 
     if @battle.present?
