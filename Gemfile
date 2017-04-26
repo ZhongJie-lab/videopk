@@ -41,7 +41,7 @@ gem 'mini_magick'
 gem 'figaro'
 gem 'fog'
 gem 'paperclip', '~> 4.1'
-
+gem 'simple_token_authentication', '~> 1.0'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
