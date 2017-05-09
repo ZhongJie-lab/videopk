@@ -1,8 +1,7 @@
 class BattlesController < ApplicationController
   before_action :authenticate_user!, only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video]
 
-  before_action :find_battle, only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video, :visitor_vote_left, :visitor_vote_right, :undo_visitor_vote_right, :undo_visitor_vote_left, :visitor_turn_left_from_right, :visitor_turn_right_from_left
-  ]
+  before_action :find_battle, only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video, :vote_for_left, :vote_for_right]
 
   def index
     #@battle = Battle.published.recent.first
@@ -26,12 +25,13 @@ class BattlesController < ApplicationController
   def show
     @battle = Battle.find(params[:id])
     @title = @battle.title
+    
   end
   def follow_left_video
     if current_user.has_follow_right?(@battle)
-      flash[:warning] = "已经给右边视频投票！不能同时投两边！"
+      flash[:warning] = "已经给右边视频投票！不能同时投两边！" if request.format.html?
     else
-    flash[:warning] = "投票成功"
+    flash[:warning] = "投票成功" if request.format.html?
       current_user.follow_left!(@battle)
     end
     redirect_to :back
@@ -44,9 +44,9 @@ class BattlesController < ApplicationController
 
   def follow_right_video
     if current_user.has_follow_left?(@battle)
-      flash[:warning] = "已经给左边视频投票！不能同时投两边！"
+      flash[:warning] = "已经给左边视频投票！不能同时投两边！" if request.format.html?
     else
-    flash[:warning] = "投票成功"
+    flash[:warning] = "投票成功" if request.format.html?
       current_user.follow_right!(@battle)
     end
     redirect_to :back
@@ -56,66 +56,102 @@ class BattlesController < ApplicationController
     current_user.unfollow_right!(@battle)
     redirect_to :back
   end
+  
+  def vote_for_left
+    if current_user
+      if current_user.has_follow_right?(@battle)
 
-  def find_visitor_vote_forLeft(isLeft = true)
-    visitorID = ""
-    if(visitor_id_incookie = cookies.signed[:visitorID])
-      visitorID = visitor_id_incookie
+        flash[:warning] = "已经投了右边" if request.format.html?
+        respond_to do |format|
+          format.html {redirect_to :back}
+          format.js
+        end
+        return
+      end
+      
+      if current_user.has_follow_left?(@battle)
+        flash[:warning] = "不能再投了" if request.format.html?
+        respond_to do |format|
+          format.html {redirect_to :back}
+          format.js
+        end
+        return
+      end
+      
+      current_user.follow_left!(@battle)
+      flash[:warning] = "投票成功" if request.format.html?
+        respond_to do |format|
+          format.html {redirect_to :back}
+          format.js
+        end
     else
-      visitorID = Time.now.to_s
-      cookies.permanent.signed[:visitorID] = visitorID
+      #visitor click left vote button
+      visitorID = find_visitor_id
+      visitorVoteForTheBattle = @battle.visitor_votes.find_by(visitorID:visitorID)
+      if visitorVoteForTheBattle
+        if visitorVoteForTheBattle.voteLeft
+          flash[:warning] = "不能再投了" if request.format.html?
+        else
+          flash[:warning] = "已经投了右边"  if request.format.html?
+        end
+      else
+        newVote = @battle.visitor_votes.build(visitorID:visitorID,voteLeft:true)
+        flash[:warning] = "投票成功" if request.format.html?
+        newVote.save
+      end
+      respond_to do |format|
+        format.html {redirect_to :back}
+        format.js
+      end
     end
-    @battle.visitor_votes.find_by(visitorID:visitorID,voteLeft:isLeft)
-  end
-  def visitor_vote_for(isLeft = true)
-    visitorID = ""
-    if(visitor_id_incookie = cookies.signed[:visitorID])
-      visitorID = visitor_id_incookie
-    else
-      visitorID = Time.now.to_s
-      cookies.permanent.signed[:visitorID] = visitorID
-    end
-    @battle.visitor_votes.build(visitorID:visitorID,voteLeft:isLeft)
-  end
-  def visitor_vote_right
-    flash[:warning] = "投票成功"
-    thisVote = visitor_vote_for(false)#@battle.visitor_votes.build(visitorID:visitorID,voteLeft:false)
-    #thisVote = VisitorVote.create(battle:@battle, visitorID:visitorID,voteLeft:false)  
-    thisVote.save
-    redirect_to :back
   end
   
-  def visitor_vote_left
-    flash[:warning] = "投票成功"
-    thisVote = visitor_vote_for(true)#@battle.visitor_votes.build(visitorID:visitorID,voteLeft:false)
-    thisVote.save
-    redirect_to :back
-  end
-  def undo_visitor_vote_right
-    flash[:warning] = "服用后悔药成功"
-    thisVote = find_visitor_vote_forLeft(false)
-    thisVote.delete
-    redirect_to :back
-  end
-  def undo_visitor_vote_left
-    flash[:warning] = "服用后悔药成功"
-    thisVote = find_visitor_vote_forLeft(true)
-    thisVote.delete
-    redirect_to :back
-  end
-  def visitor_turn_right_from_left
-    thisVote = find_visitor_vote_forLeft(true)
-    thisVote.voteLeft = false
-    thisVote.save
-    flash[:warning] = "换阵营成功"
-    redirect_to :back
-  end
-  def visitor_turn_left_from_right
-    thisVote = find_visitor_vote_forLeft(false)
-    thisVote.voteLeft = true
-    thisVote.save
-    flash[:warning] = "换阵营成功"
-    redirect_to :back
+  def vote_for_right
+    if current_user
+      if current_user.has_follow_left?(@battle)
+        flash[:warning] = "已经投了左边" if request.format.html?
+        respond_to do |format|
+          format.html {redirect_to :back}
+          format.js
+        end
+        return
+      end
+      
+      if current_user.has_follow_right?(@battle)
+        flash[:warning] = "不能再投了" if request.format.html?
+        respond_to do |format|
+          format.html {redirect_to :back}
+          format.js
+        end
+        return
+      end
+      
+      current_user.follow_right!(@battle)
+      flash[:warning] = "投票成功" if request.format.html?
+        respond_to do |format|
+          format.html {redirect_to :back}
+          format.js
+        end
+    else
+      #visitor click left vote button
+      visitorID = find_visitor_id
+      visitorVoteForTheBattle = @battle.visitor_votes.find_by(visitorID:visitorID)
+      if visitorVoteForTheBattle
+        if visitorVoteForTheBattle.voteLeft == false
+          flash[:warning] = "不能再投了" if request.format.html?
+        else
+          flash[:warning] = "已经投了左边" if request.format.html?
+        end
+      else
+        newVote = @battle.visitor_votes.build(visitorID:visitorID,voteLeft:false)
+        flash[:warning] = "投票成功" if request.format.html?
+        newVote.save
+      end
+      respond_to do |format|
+        format.html {redirect_to :back}
+        format.js
+      end
+    end
   end
   def about
   end
@@ -127,4 +163,15 @@ class BattlesController < ApplicationController
   def find_battle
     @battle = Battle.find(params[:id])
   end
+  def find_visitor_id
+    visitorID = ""
+    if(visitor_id_incookie = cookies.signed[:visitorID])
+      visitorID = visitor_id_incookie
+    else
+      visitorID = Time.now.to_s
+      cookies.permanent.signed[:visitorID] = visitorID
+    end
+    visitorID
+  end
+
 end

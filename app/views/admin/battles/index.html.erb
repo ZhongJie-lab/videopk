@@ -3,7 +3,43 @@
       <%= link_to("新建视频PK", new_admin_battle_path, :class => "btn btn-xs btn-default") %>
   </span>
   <br>
-  <% @battles.each do |b| %>
+  <div >已审批</div>
+  <% @battles_proved.each do |b| %>
+  <div class="row" style="margin-bottom: 20px;">
+    <p class="text-center"><b><%= b.id %>组 <%= link_to(b.title, admin_battle_path(b)) %></b></p>
+    <hr>
+    <div class="col-xs-4 text-center">
+      1号得票：<%= b.left_followers.count %>
+    </div>
+    <div class="col-xs-4 text-center">
+      2号得票：<%= b.right_followers.count %>
+    </div>
+    <div class="col-xs-4 text-center">
+      留言：<%= link_to(b.battle_comments.count, admin_battle_battle_comments_path(b)) %>条
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 20px;">
+    <div class="col-xs-8 text-center">
+      PK发布于： <%= b.created_at.strftime("%d %b. %Y") %>
+    </div>
+    <div class="col-xs-4 text-center">
+      <% if b.is_hidden %>
+        <%= link_to publish_admin_battle_path(b), :method => :post, :class => "btn btn-xs btn-success" do %>
+        <i class="fa fa-eye"></i><% end %>
+      <% else %>
+        <%= link_to hidden_admin_battle_path(b), :method => :post, :class => "btn btn-xs btn-warning" do %>
+        <i class="fa fa-eye-slash"></i><% end %>
+      <% end %>
+      <%= link_to edit_admin_battle_path(b), class: 'btn btn-default btn-xs' do %>
+      <i class="fa fa-pencil"></i><% end %>
+      <%= link_to admin_battle_path(b), :method => :delete, :data => {:confirm => "Are your sure?" }, class: 'btn btn-danger btn-xs' do %>
+      <i class="fa fa-trash-o"></i>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+  <div >待审批</div>
+  <% @battles_waiting_prove.each do |b| %>
   <div class="row" style="margin-bottom: 20px;">
     <p class="text-center"><b><%= b.id %>组 <%= link_to(b.title, admin_battle_path(b)) %></b></p>
     <hr>

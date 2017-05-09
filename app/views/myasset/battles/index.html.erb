@@ -4,11 +4,14 @@
   </span>
   <br>
   <% @battles.each do |b| %>
-
+<% left_video = Video.find(b.left_video_id) %>
+<% right_video = Video.find(b.right_video_id) %>
   <div class="row" style="margin-bottom: 20px;">
-    <h4 class="text-center myasset-battle-title"><%= link_to(b.title, myasset_battle_path(b)) %></h4>
+    <div class = "row col-sm-10 col-xs-10">
+      <h5 class="text-center myasset-battle-title col-sm-10 col-xs-10"><%= link_to(b.title, myasset_battle_path(b)) %></h4>      
+    </div>
     <hr>
-    <div class="pull-right">
+    <div class="pull-right col-sm-2 col-xs-2">
       <% if b.is_hidden %>
         <%= link_to edit_myasset_battle_path(b), class: 'btn btn-default btn-xs' do %>
         <i class="fa fa-pencil"></i><% end %>
@@ -20,19 +23,40 @@
         <small class="btn btn-warning btn-xs">比赛正在进行中</small>
       <% end %>
     </div>
+    </div>
     <br><br>
     <div class="col-xs-4">
-      1号得票：<%= b.left_followers.count %>
+      1号实名得票：<%= b.left_followers.count %>
     </div>
     <div class="col-xs-4">
-      2号得票：<%= b.right_followers.count %>
+      2号实名得票：<%= b.right_followers.count %>
     </div>
     <div class="col-xs-4">
       留言：<%= link_to(b.battle_comments.count, myasset_battle_battle_comments_path(b)) %>条
     </div>
+    <br><br>
+<div class="container">
+  <div class="row">
+    <%= render :partial => "singlebattle", locals: {battle: b}%>
+  </div>
+  <div class="row ">
+
+
+    <div class="col-sm-4 col-xs-4">
+      <video src= <%= left_video.video_url.to_s %> style = "width:100%" poster=<%= left_video.image.thumb.to_s %>  controls>
+      <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.webm">link to the video</a> instead.</p>
+      </video>
+    </div>
+    <div class="col-sm-4 col-xs-r">
+      <video src=<%= right_video.video_url.to_s %> style = "width:100%"  poster=<%= right_video.image.thumb.to_s %> controls>
+        <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.webm">link to the video</a> instead.</p>
+      </video>
+    </div>
+  </div>
+</div>
   </div>
   <p>
-    PK发布于： <%= b.created_at.strftime("%Y年%-m月%d日") %>
+    发布于： <%= b.created_at.strftime("%Y年%-m月%d日") %>
   </p>
   <% end %>
 </div>

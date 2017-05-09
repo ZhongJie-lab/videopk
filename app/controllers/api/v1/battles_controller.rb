@@ -8,8 +8,8 @@ class Api::V1::BattlesController < ApplicationController
   #before_action :authenticate_user!, only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video]
   
   before_action :verify_api_only, only:[:index, :show]
-  before_action :find_battle, only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video]
-  acts_as_token_authentication_handler_for User , only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video]
+  before_action :find_battle, only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video, :get_battle]
+  acts_as_token_authentication_handler_for User , only: [:follow_left_video, :unfollow_left_video, :follow_right_video, :unfollow_right_video, :get_battle]
 
 
   def index
@@ -100,6 +100,33 @@ class Api::V1::BattlesController < ApplicationController
 
   def contact
   end
+
+  def get_battle
+    if verify_api_only == true
+      respond_to :json
+      @battle = Battle.find(params[:id])
+
+      if @battle.present?
+        @left_video = Video.find(@battle.left_video_id)
+        @right_video = Video.find(@battle.right_video_id)
+
+        @latestBattle = {id:@battle.id, title:@battle.title, leftImage:@left_video.image.thumb.to_s, leftVideo:@left_video.video_url.to_s, rightImage:@right_video.image.thumb.to_s, rightVideo:@right_video.video_url.to_s, leftCount: @battle.left_followers.count, rightCount:@battle.right_followers.count}
+        # @left_video_comments = VideoComment.where(video_id: @battle.left_video_id).order("created_at DESC")
+        # @left_video_comment = VideoComment.new
+        #
+        # @right_video_comments = VideoComment.where(video_id: @battle.right_video_id).order("created_at DESC")
+        # @right_video_comment = VideoComment.new
+
+        @battle_comments = BattleComment.where(battle_id: @battle.id)
+        @battle_comment = BattleComment.new
+        render json: @latestBattle
+      end
+
+    else
+      render status: :unauthorized
+    end
+  end
+
 
   private
   def find_battle

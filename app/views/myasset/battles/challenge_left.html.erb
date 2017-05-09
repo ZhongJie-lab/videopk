@@ -1,10 +1,17 @@
+<div class="col-xs-12 new-video">
+  <br>
+    <h4 class="text-center">即将挑战</h4>
+      <video src=<%= @challenge_video.video_url.to_s %> style = "width:100%"  poster=<%= @challenge_video.image.thumb.to_s %> controls>
+        <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.webm">link to the video</a> instead.</p>
+      </video>
+    <h4 class="text-center"><%= "挑战主题:" +  @challenge_battle.title %></h4>      
 <div class="form-group">
-    <%= simple_form_for [:myasset, @video] do |f| %>
+<%= simple_form_for [:myasset, @video], 
+    
+    :url => myasset_battle_createChallenge_left_path,
+    :method => 'post' do |f| %>    
     <div class="group">
         <%= f.input :title, :label => "我的视频名称" %>
-    </div>
-    <div class="group">
-        <%= f.input :description, :label => "视频介绍" %>
     </div>
     <% if @video.image.present? %>
     <span>视频封面</span>
@@ -18,6 +25,7 @@
     <div class="group">
         <%=f.file_field :video %> （视频）<br>
     </div>
+    
     <br>
     <div class="form-actions">
       <%= f.submit "提交" , disable_with: "Submiting...", class: "btn btn-success", :style => "border: none;color:white;width:49%;background-color:#74d4b3;" %>
@@ -25,3 +33,7 @@
     </div>
 </div>
 <% end %>
+
+</div>
+
+

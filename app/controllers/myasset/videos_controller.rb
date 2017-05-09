@@ -20,7 +20,7 @@ class Myasset::VideosController < ApplicationController
       @video.user = current_user
 
       if @video.save!
-        redirect_to myasset_videos_path, notice: '视频已创建!'
+          redirect_to myasset_videos_path, notice: '视频已创建!'
       else
         render :new
       end

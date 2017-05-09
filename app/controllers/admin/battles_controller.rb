@@ -6,6 +6,8 @@ class Admin::BattlesController < ApplicationController
 
   def index
     @battles = Battle.all
+    @battles_waiting_prove = Battle.all.where(is_hidden: true)
+    @battles_proved        = Battle.all.where(is_hidden: false)
   end
 
   def show

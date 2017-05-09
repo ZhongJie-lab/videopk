@@ -7,15 +7,12 @@
   <div class="row">
     <div class="col-xs-8">
       <p><%= link_to(v.title, myasset_video_path(v)) %></td></p>
-      <p>
-        <%= link_to myasset_video_path(v) do %>
-          <% if v.image.present? %>
-            <%= image_tag(v.image.thumb.url, class: "thumbnail") %>
-          <% else %>
-            <%= image_tag("http://placehold.it/200x200&text=No Pic", class: "thumbnail") %>
-          <% end %>
-        <% end %>
-      </p>
+    <div class="col-sm-6 col-xs-6">
+      <video src=<%= v.video_url.to_s %> style = "width:100%"  poster=<%= v.image.thumb.to_s %> controls>
+        <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.webm">link to the video</a> instead.</p>
+      </video>
+    </div>
+
     </div>
     <div class="col-xs-4" style="padding-top: 60px;">
       <p>

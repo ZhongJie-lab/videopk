@@ -1,0 +1,48 @@
+  <% battle = local_assigns[:battle] %>
+     <% if left_is_voted(battle) %>
+         <%  left_vote_link_text = "已经投TA"%>
+     <% else %>
+         <%  left_vote_link_text = "投票给TA"%>
+     <% end %>
+     <% if right_is_voted(battle) %>
+         <%  right_vote_link_text = "已经投TA"%>
+     <% else %>
+         <%  right_vote_link_text = "投票给TA"%>
+     <% end %>
+
+
+  <% if battle %>
+  <div class="row">
+
+    <div class="col-sm-6 col-xs-6">
+                <%= link_to(left_vote_link_text, vote_for_left_battle_path(battle), :method => :post,
+                                              :class => "btn btn-default vote_left", :remote => true) %>
+    </div>
+    <div class="col-sm-6 col-xs-6" style="text-align:right">
+                <%= link_to(right_vote_link_text, vote_for_right_battle_path(battle), :method => :post,
+                                              :class => "btn btn-default vote_right", :remote => true) %>
+    </div>
+  </div>
+  <div class="row">
+
+    <% if total_votes(battle) >0 %>
+        <div class="progress" style="margin-top: 20px;">
+            <div id="leftBar" class="progress-bar" role="progressbar" style="width:<%= render_left_width(battle)%>%;
+                        background-color:#79e8d0; color:black;">
+          
+                <p><%= left_votes(battle) %></p>
+            </div>
+            <div id="rightBar" class="progress-bar" role="progressbar" style="width:<%= render_right_width(battle)%>%;
+                        background-color:#ff7073; color:white;" >
+                <p><%= right_votes(battle) %></p>
+            </div>
+
+        </div>
+    <% else %>
+        <div class="progress" style="margin-top: 20px;">
+            <div id="leftBar" class="progress-bar" role="progressbar" style="width:100%; background-color:#efefef;">
+            </div>
+          </div>
+    <% end %>
+    </div>
+  <% end %>

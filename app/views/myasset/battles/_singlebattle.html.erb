@@ -1,0 +1,25 @@
+  <% battle = local_assigns[:battle] %>
+  <% if battle %>
+  <div class="row col-sm-8 col-xs-8">
+
+    <% if total_votes(battle) >0 %>
+        <div class="progress" style="margin-top: 20px;">
+            <div id="leftBar" class="progress-bar" role="progressbar" style="width:<%= render_left_width(battle)%>%;
+                        background-color:#79e8d0; color:black;">
+          
+                <p><%= left_votes(battle) %></p>
+            </div>
+            <div id="rightBar" class="progress-bar" role="progressbar" style="width:<%= render_right_width(battle)%>%;
+                        background-color:#ff7073; color:white;" >
+                <p><%= right_votes(battle) %></p>
+            </div>
+
+        </div>
+    <% else %>
+        <div class="progress" style="margin-top: 20px;">
+            <div id="leftBar" class="progress-bar" role="progressbar" style="width:100%; background-color:#efefef;">
+            </div>
+          </div>
+    <% end %>
+    </div>
+  <% end %>

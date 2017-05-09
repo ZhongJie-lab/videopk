@@ -17,81 +17,9 @@
 
 <div class="container">
 
-  <div class="row">
-    <div class="col-sm-6 col-xs-6">
-                <% if current_user %>
-                    <% if current_user.has_follow_left?(@battle) %>
-                        <%= link_to("不投TA了", unfollow_left_video_battle_path(@battle), :method => :post,
-                                              :class => "btn btn-default vote_left") %>
-                    <% else %>
-                        <%= link_to("投票给TA", follow_left_video_battle_path(@battle), :method => :post,
-                                              :class => "btn btn-default vote_left") %>
-                    <% end %>
-                <% else %>
-                    <% if @battle.visitor_votes.find_by(visitorID: cookies.signed[:visitorID], voteLeft: true) %>
-                      <%= link_to("不投TA", undo_visitor_vote_left_battle_path(@battle), :method => :post, :class => "btn btn-default vote_right") %>
-                    <% else %>
-                      <% if @battle.visitor_votes.find_by(visitorID: cookies.signed[:visitorID], voteLeft: false) %>
-                        <%= link_to("改投TA", visitor_turn_left_from_right_battle_path(@battle), :method => :post, :class => "btn btn-default vote_left") %>
-                      <% else %>
-                        <%= link_to("匿名顶TA", visitor_vote_left_battle_path(@battle), :method => :post, :class => "btn btn-default vote_left") %>
-                      <% end %>                      
-                    <% end %>
-                <% end %>
+  <div id="<%= "votebar_battle_#{@battle.id}"%>">
 
-                <%= @battle.left_followers.count +  @battle.visitor_votes.where(voteLeft: true).count %>
-    </div>
-    <div class="col-sm-6 col-xs-6" style="text-align:right">
-                    <%= @battle.right_followers.count + @battle.visitor_votes.where(voteLeft: false).count %>
-                    <% if current_user %>
-                    <% if current_user.has_follow_right?(@battle) %>
-                    <!-- <%#= link_to unfollow_right_video_battle_path(battle), :method => :post do %>
-                                      <i class="fa fa-thumbs-up fa-2x flip" aria-hidden="true" style="color:red;"></i>
-                                    <%# end %> -->
-                    <%= link_to("不投TA了", unfollow_right_video_battle_path(@battle), :method => :post,
-                                                  :class => "btn btn-default vote_right") %>
-                <% else %>
-                    <!-- <%#= link_to follow_right_video_battle_path(battle), :method => :post do %>
-                                    <i class="fa fa-thumbs-o-up fa-2x flip" aria-hidden="true" style="color:red;"></i>
-                                    <%# end %> -->
-                    <%= link_to("投票给TA", follow_right_video_battle_path(@battle), :method => :post,
-                                                  :class => "btn btn-default vote_right") %>
-                    <% end %>
-                <% else %>
-                    <!-- <%#= link_to new_user_session_path, :method => :post do %>
-                                    <i class="fa fa-thumbs-o-up fa-2x flip" aria-hidden="true" style="color:red;"></i>
-                                  <%# end %> -->
-                    <% if @battle.visitor_votes.find_by(visitorID: cookies.signed[:visitorID], voteLeft: false) %>
-                      <%= link_to("不投TA", undo_visitor_vote_right_battle_path(@battle), :method => :post, :class => "btn btn-default vote_right") %>
-                    <% else %>
-                      <% if @battle.visitor_votes.find_by(visitorID: cookies.signed[:visitorID], voteLeft: true) %>
-                        <%= link_to("改投TA", visitor_turn_right_from_left_battle_path(@battle), :method => :post, :class => "btn btn-default vote_right") %>
-                      <% else %>
-                        <%= link_to("匿名顶TA", visitor_vote_right_battle_path(@battle), :method => :post, :class => "btn btn-default vote_right") %>
-                      <% end %>
-                    <% end %>
-                    <% end %>
-    </div>
-  </div>
-  <div class="row">
-  <% if @battle.left_followers.count > 0 || @battle.right_followers.count > 0 %>
-    <div class="progress" style="margin-top: 20px;">
-        <div id="leftBar" class="progress-bar" role="progressbar" style="width:<%= render_left_width(@battle)%>%;
-                        background-color:#79e8d0; color:#79e8d0;">
-            Left
-        </div>
-        <div id="rightBar" class="progress-bar" role="progressbar" style="width:<%= render_right_width(@battle)%>%;
-                        background-color:#ff7073; color:#ff7073;" >
-            Right
-        </div>
-    </div>
-  <% else %>
-    <div class="progress" style="margin-top: 20px;">
-            <div id="leftBar" class="progress-bar" role="progressbar" style="width:100%; background-color:#efefef;">
-            </div>
-          </div>
-  <% end %>
-
+    <%= render :partial => "votebar_battle", locals: {battle: @battle}%>
   </div>
   <div class="row ">
 
@@ -107,6 +35,10 @@
       </video>
     </div>
   </div>
+  
+
+
+
 </div>
 
 
@@ -156,3 +88,26 @@
     </div>
     <% end %>
     <% end %>
+    
+<footer class="container page-footer">
+    <!-- <p class="text-center">Copyright ©2017 短视频对战
+        <br> All Rights Reserved.
+        <a href="https://github.com/jiezhon/videopk" target=_new>Github</a>
+    </p> -->
+    <div class="row page-footer" style="width: 100%">
+    <div class="col-sm-6 col-xs-6 text-center">
+            <% if !current_user %>
+              <%= link_to("挑战左边", new_user_session_path) %>
+            <% else %>
+              <%= link_to("挑战左边", myasset_battle_challenge_left_path(@battle)) %>
+            <% end %>
+    </div>
+    <div class="col-sm-6 col-xs-6 text-center">
+            <% if !current_user %>
+              <%= link_to("挑战右边", new_user_session_path) %>
+            <% else %>
+              <%= link_to("挑战右边", myasset_battle_challenge_right_path(@battle)) %>
+            <% end %>      
+    </div>
+    </div>
+</footer>

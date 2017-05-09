@@ -3,11 +3,7 @@
   视频介绍：<%= simple_format(@video.description) %>
 </p>
 <div class="col-xs-8 col-xs-offset-1">
-  <% if @video.image.present? %>
-    <%= image_tag(@video.image.medium.url, class: "thumbnail", :size => "300x300") %>
-  <% else %>
-    <%= image_tag("http://placehold.it/400x400&text=No Pic", class: "thumbnail") %>
-  <% end %>
-  <%= video_tag(@video.video_url.to_s, :controls =>true, width: 300) %>
-  <br>
+      <video src=<%= @video.video_url.to_s %> style = "width:100%"  poster=<%= @video.image.thumb.to_s %> controls>
+        <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.webm">link to the video</a> instead.</p>
+      </video>
 </div>
