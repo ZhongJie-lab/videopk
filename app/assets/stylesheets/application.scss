@@ -167,6 +167,45 @@ hr {
         background: #b71919;
         color: #fff; }
 
+
+
+.challenge_left {
+  //background: blue;
+  //background: #bfdbb8;
+  background: #79e8d0;
+  // padding: 1.2em 1.5em;
+  border: none;
+  //font-weight: bold;
+  color: #fff;
+  -webkit-transition: background .3s ease;
+          transition: background .3s ease;
+  width: 100%;
+  height: 40px;
+  font-size: 18px;
+}
+
+.challenge_left:hover {
+    background: #c5ecf9;
+    color: #fff; }
+
+.challenge_right {
+      //background: red;
+      //background: #f29f3f;
+      background: #ff7073;
+      // padding: 1.2em 1.5em;
+      border: none;
+      //font-weight: bold;
+      color: #fff;
+      -webkit-transition: background .3s ease;
+              transition: background .3s ease;
+  width: 100%;
+  height: 40px;
+    font-size: 18px;
+    }
+
+.challenge_right:hover {
+        background: #b71919;
+        color: #fff; }
 .page-footer {
   position: fixed;
   bottom: 0;

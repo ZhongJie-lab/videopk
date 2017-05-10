@@ -36,7 +36,15 @@
     </div>
   </div>
 
+  <div class="row">
 
+    <div class="col-sm-6 col-xs-6 text-center">
+              <%= link_to("挑战左边", myasset_battle_challenge_left_path(@battle), :class => "btn btn-default challenge_left") %>
+    </div>
+    <div class="col-sm-6 col-xs-6 text-center">
+              <%= link_to("挑战右边", myasset_battle_challenge_right_path(@battle), :class => "btn btn-default challenge_right") %>
+    </div>
+  </div>
 
 
 </div>
@@ -89,26 +97,3 @@
     </div>
     <% end %>
     <% end %>
-
-<footer class="container page-footer">
-    <!-- <p class="text-center">Copyright ©2017 短视频对战
-        <br> All Rights Reserved.
-        <a href="https://github.com/jiezhon/videopk" target=_new>Github</a>
-    </p> -->
-    <div class="row page-footer" style="width: 100%">
-    <div class="col-sm-6 col-xs-6 text-center">
-            <% if !current_user %>
-              <%= link_to("挑战左边", new_user_session_path) %>
-            <% else %>
-              <%= link_to("挑战左边", myasset_battle_challenge_left_path(@battle)) %>
-            <% end %>
-    </div>
-    <div class="col-sm-6 col-xs-6 text-center">
-            <% if !current_user %>
-              <%= link_to("挑战右边", new_user_session_path) %>
-            <% else %>
-              <%= link_to("挑战右边", myasset_battle_challenge_right_path(@battle)) %>
-            <% end %>
-    </div>
-    </div>
-</footer>

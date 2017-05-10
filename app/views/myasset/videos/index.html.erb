@@ -5,12 +5,12 @@
   <br>
   <% @videos.each do |v| %>
   <div class="row">
-    <div class="col-sm-6 col-xs-6">
+    <div class="col-sm-8 col-xs-8">
       <p><%= link_to(v.title, myasset_video_path(v)) %></td></p>
 
     </div>
     
-    <div class="col-sm-6 col-xs-6">
+    <div class="col-sm-4 col-xs-4">
       <p>
         <%= link_to edit_myasset_video_path(v), class: 'btn btn-default btn-xs' do %>
           <i class="fa fa-pencil"></i>

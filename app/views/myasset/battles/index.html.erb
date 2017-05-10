@@ -23,12 +23,15 @@
         <% end %>
       </div>
     </div>
+  <div>
+    发布于： <%= b.created_at.strftime("%Y年%-m月%d日") %>
+  </div>
     <div class="row">
       <div class="col-xs-4">
-        1号实名得票：<%= b.left_followers.count %>
+        左边得票：<%= left_votes(b) %>
       </div>
       <div class="col-xs-4">
-        2号实名得票：<%= b.right_followers.count %>
+        右边得票：<%= right_votes(b) %>
       </div>
       <div class="col-xs-4">
         留言：<%= link_to(b.battle_comments.count, myasset_battle_battle_comments_path(b)) %>条
@@ -52,11 +55,6 @@
         </div>
       </div>
     </div>
-  <div>
-  <p>
-    发布于： <%= b.created_at.strftime("%Y年%-m月%d日") %>
-  </p>
-    
-  </div>
+
   <% end %>
 </div>
